@@ -1,5 +1,4 @@
 using Clang.Generators
-using Pkg
 
 cd(@__DIR__)
 
