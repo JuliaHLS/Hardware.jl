@@ -1,7 +1,12 @@
 module Hardware
 
+using Libdl
 using JMLIRCore
 
-const libpath = "/usr/local/lib/libHLSCore_C_API"
+const libxxx= "/usr/local/lib/libHLSCore_C_API.so"
+const lib = dlopen(libxxx)
+
+include("HLSTool.jl")
+
 
 end # module Hardware
