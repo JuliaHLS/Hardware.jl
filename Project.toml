@@ -1,0 +1,4 @@
+name = "Hardware"
+uuid = "d833523f-da62-4c29-b8e0-a1e26faeac71"
+authors = ["BenShort <benedictnjshort@gmail.com>"]
+version = "0.1.0"
