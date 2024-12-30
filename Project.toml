@@ -5,6 +5,8 @@ version = "0.1.0"
 
 [deps]
 Clang = "40e3b903-d033-50b4-a0cc-940c62c95e31"
+JMLIRCore = "94029c64-618c-4c5d-afcf-c534916f7e83"
 
 [compat]
 Clang = "0.18.3"
+JMLIRCore = "1.0.0"
