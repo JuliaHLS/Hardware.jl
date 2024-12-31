@@ -5,6 +5,7 @@
 1. Install CIRCT and its LLVM Dialects
 2. Install HLSCore
 3. Ensure Access to JMLIRCore
+4. `export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib`
 
 #### Installing CIRCT and its LLVM Dialects
 1. Build the latest version of CIRCT and LLVM (https://github.com/llvm/circt)
