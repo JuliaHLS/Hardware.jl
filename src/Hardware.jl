@@ -1,12 +1,7 @@
 module Hardware
 
-using Libdl
-using JMLIRCore
+include("Synthesise.jl")
 
-const libxxx= "/usr/local/lib/libHLSCore_C_API.so"
-const lib = dlopen(libxxx)
-
-include("HLSTool.jl")
-
+export @hardware_synthesise, hardware_synthesise
 
 end # module Hardware
