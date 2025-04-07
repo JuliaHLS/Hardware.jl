@@ -1,0 +1,3 @@
+[general]
+output_file_path = "../../src/HLSTool.jl"
+module_name = ""
