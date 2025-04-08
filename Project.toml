@@ -9,11 +9,8 @@ JMLIRCore = "94029c64-618c-4c5d-afcf-c534916f7e83"
 LLVM = "929cbde3-209d-540e-8aea-75f648917ca0"
 Libdl = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 MLIR = "bfde9dd4-8f40-4a1e-be09-1475335e1c92"
-StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
 
 [compat]
 CEnum = "0.4.2"
-LLVM = "9.2.0"
 Libdl = "1.11.0"
 MLIR = "0.1.0"
-StaticArrays = "1.9.13"
