@@ -22,14 +22,14 @@ struct HLSCore_IO
         _inputMlir = inputMlir
         _outputFilename = outputFilename
 
-        _opt = _createHLSConfig()
+        opt = _createHLSConfig()
 
-        new(_opt, _inputMlir, _outputFilename)
+        new(opt, _inputMlir, _outputFilename)
     end
 
 
     # private data members
-    _opt::HLSCore.HLSConfig
+    opt::HLSCore.HLSConfig
     _inputMlir::String
     _outputFilename::String
 end
@@ -55,8 +55,8 @@ function _createHLSConfig()
     return opt
 end
 
-function getOptionsPtr(opt::HLSCore_IO)::Ptr{HLSCore.HLSConfig}
-    return pointer(opt._opt)
+function getHLSConfig(opt::HLSCore_IO)
+    return Ref(opt.opt)
 end
 
 mutable struct HLSToolWrapper
@@ -86,16 +86,17 @@ mutable struct HLS
     opt::HLSCore_IO
 end
 
+function getHLSConfig(tool::HLS)
+    return getHLSConfig(tool.opt)
+end
+
 
 function synthesise(tool::HLS, input::String, output::String)
     println("Instantiating HLS tool...")
     tool.opt = HLSCore_IO(input, output)
 
-
-    println("opt level: ", tool.opt._opt.irInputLevel)
-
     println("Setting Options")
-    HLSCore.HLSTool_setOptions(tool._tool.ptr, Ref(tool.opt._opt), tool.opt._inputMlir, tool.opt._outputFilename)
+    HLSCore.HLSTool_setOptions(tool._tool.ptr, getHLSConfig(tool), tool.opt._inputMlir, tool.opt._outputFilename)
 
     println("Starting synthesis...")
     if (!HLSCore.HLSTool_synthesise(tool._tool.ptr))
@@ -116,11 +117,6 @@ end
 macro hardware_synthesise(call, outputFilename = "-"::String)
     @assert Meta.isexpr(call, :call) "only calls are supported"
 
-    println("here")
-
-    println("Using call: ", call)
-    println("Using args: ", call.args[begin+1:end])
-
     for arg in call.args[begin+1:end]
         println("Using arg type: ", arg)
         println("Got arg type: ", Core.Typeof(arg))
@@ -128,7 +124,6 @@ macro hardware_synthesise(call, outputFilename = "-"::String)
 
     f = esc(first(call.args))
 
-    println("set f")
     args = esc(
         Expr(
             :curly,
@@ -136,7 +131,6 @@ macro hardware_synthesise(call, outputFilename = "-"::String)
             map(arg -> :($(Core.Typeof)($arg)), call.args[(begin + 1):end])...,
         ),
     )
-    println("Extracted")
 
     quote
         hardware_synthesise($f, $args, $outputFilename)
@@ -157,5 +151,4 @@ function hardware_synthesise(f, args, output::String)
     # that multiple instances of the HLS tool do not
     # live in memory simultaneously
     GC.gc()
-
 end
