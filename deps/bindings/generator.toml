@@ -1,3 +1,4 @@
 [general]
 output_file_path = "../../src/HLSTool.jl"
-module_name = ""
+module_name = "HLSCore"
+library_name="\"libHLSCore_C_API.so\""

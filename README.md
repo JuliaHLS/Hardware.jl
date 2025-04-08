@@ -1,18 +1,14 @@
 # Hardware.jl
 
+## Generating Bindings
+We use `Clang.jl` to automatically generate the C bindings. Please run this with the latest stable version of Julia (v0.11.0) instead of the nightly. This is because `Clang.jl` has not been updated to use the latest version of LLVM yet, and is pinned to `LLVM 16`. This cannot simply be bumped, due to the significant changes made between `LLVM 16` and `LLVM 17`.
 
 ## Dependencies
-1. Install CIRCT and its LLVM Dialects
-2. Install HLSCore
-3. Ensure Access to JMLIRCore
-4. `export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib`
+1. Install HLSCore
+2. Ensure Access to JMLIRCore
+3. `export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib`
 
-#### Installing CIRCT and its LLVM Dialects
-1. Build the latest version of CIRCT and LLVM (https://github.com/llvm/circt)
-2. Execute `cd circt/llvm/build`, and `sudo ninja install`
-3. Go back to the root directory to execute `cd circt/build` and `sudo ninja install`
-
-#### Installing HLSCore
+## Installing HLSCore
 1. `git clone git@github.com:JuliaHLS/HLSCore.git`
 2. `cd HLSCore`
 3. `mkdir build`

@@ -2,7 +2,7 @@
 
 julia_version = "1.12.0-beta1"
 manifest_format = "2.0"
-project_hash = "e60f20bdb21227e0490807544b91f1a45947ace1"
+project_hash = "815c04f9abbddd282955a7477d119c2672b2f354"
 
 [[deps.ArgTools]]
 uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
@@ -41,7 +41,7 @@ uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
 version = "1.11.0"
 
 [[deps.Hardware]]
-deps = ["CEnum", "JMLIRCore", "LLVM", "Libdl", "MLIR"]
+deps = ["CEnum", "Libdl", "MLIR"]
 path = "."
 uuid = "d833523f-da62-4c29-b8e0-a1e26faeac71"
 version = "0.1.0"
@@ -131,9 +131,7 @@ version = "1.11.0"
 
 [[deps.MLIR]]
 deps = ["CEnum", "Libdl", "MLIR_jll", "Preferences", "ScopedValues", "StaticArrays"]
-git-tree-sha1 = "5b107d7dd20b09425e831d82befdd218eaff5180"
-repo-rev = "main"
-repo-url = "/media/ben/work/mlir_fork/MLIR.jl"
+path = "/media/ben/work/mlir_fork/MLIR.jl/"
 uuid = "bfde9dd4-8f40-4a1e-be09-1475335e1c92"
 version = "0.1.0"
 
