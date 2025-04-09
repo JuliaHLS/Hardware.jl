@@ -1,19 +1,24 @@
+# High level interface to the HLS tool, including lifetime management
+
 include("HLS_IO.jl")
 
-mutable struct HLSToolWrapper
+#### Structs ####
+""" Wrap the HLSTool ptr to help with lifetime management """
+mutable struct _HLSToolWrapper
     ptr::Ptr{HLSCore.HLSTool}
 end
 
 # HLS struct once again ensuring consistent memory
 # lifetimes by pinning them in the GC via a strong
 # reference
+""" HLS driver """
 mutable struct HLS
     function HLS()
         println("Instantiating HLS Tool")
-        _tool = HLSToolWrapper(HLSCore.HLSTool_create())
+        _tool = _HLSToolWrapper(HLSCore.HLSTool_create())
 
         # register destructor
-        finalizer(_tool::HLSToolWrapper) do tool::HLSToolWrapper
+        finalizer(_tool::_HLSToolWrapper) do tool::_HLSToolWrapper
             println("Deleting the HLSTool")
             HLSCore.HLSTool_destroy(tool.ptr)
         end
@@ -23,14 +28,19 @@ mutable struct HLS
         new(_tool, HLSCore_IO("", "-"))
     end
 
-    _tool::HLSToolWrapper
+    _tool::_HLSToolWrapper
     opt::HLSCore_IO
 end
 
+
+#### Dynamic Dispatch Methods ####
+
+""" abstract away the HLSConfig """
 function getHLSConfig(tool::HLS)
     return getHLSConfig(tool.opt)
 end
 
+""" Invoke synthesis """
 function synthesise(tool::HLS, input::String, output::String)
     println("Instantiating HLS tool...")
     tool.opt = HLSCore_IO(input, output)

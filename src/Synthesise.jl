@@ -13,11 +13,6 @@ end
 macro hardware_synthesise(call, outputFilename = "-"::String)
     @assert Meta.isexpr(call, :call) "only calls are supported"
 
-    for arg in call.args[begin+1:end]
-        println("Using arg type: ", arg)
-        println("Got arg type: ", Core.Typeof(arg))
-    end
-
     f = esc(first(call.args))
 
     args = esc(

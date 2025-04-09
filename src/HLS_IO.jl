@@ -3,9 +3,28 @@
 
 include("HLSTool.jl")
 
+#### Helper Functions ####
 """ Extract a ptr to an immutable struct """
 function Base.pointer(opt::Hardware.HLSCore.HLSConfig)
     Base.unsafe_convert(Ptr{HLSCore.HLSConfig}, Ref(opt))
+end
+
+function _createHLSConfig()::HLSCore.HLSConfig
+    return HLSCore.HLSConfig(
+        false,
+        HLSCore.DynamicParallelismKind(2),
+        pointer("all"),
+        2,
+        HLSCore.IRLevel(0),
+        HLSCore.IRLevel(5),
+        false,
+        HLSCore.OutputFormatKind(1),
+        false,
+        false,
+        true,
+        false,
+        true
+    )
 end
 
 # This struct manages the lifetimes of pointers and objects
@@ -31,27 +50,10 @@ struct HLSCore_IO
     _outputFilename::String
 end
 
-function _createHLSConfig()
-    opt = HLSCore.HLSConfig(
-        false,
-        HLSCore.DynamicParallelismKind(2),
-        pointer("all"),
-        2,
-        HLSCore.IRLevel(0),
-        HLSCore.IRLevel(5),
-        false,
-        HLSCore.OutputFormatKind(1),
-        false,
-        false,
-        true,
-        false,
-        true
-    )
 
+#### Dynamic Dispatch Methods ####
 
-    return opt
-end
-
+""" return the HLSConfig as a reference (lifetime management, lives as long as the struct)"""
 function getHLSConfig(opt::HLSCore_IO)
     return Ref(opt.opt)
 end
