@@ -14,6 +14,11 @@ end
     OutputSplitVerilog = 0x0000000000000002
 end
 
+@cenum SchedulingKind::UInt32 begin
+    Static = 0x0000000000000000
+    Dynamic = 0x0000000000000001
+end
+
 @cenum IRLevel::UInt32 begin
     High = 0x0000000000000000
     PreCompile = 0x0000000000000001
@@ -41,8 +46,8 @@ end
 
 mutable struct HLSTool end
 
-function HLSTool_create()
-    ccall((:HLSTool_create, "libHLSCore_C_API.so"), Ptr{HLSTool}, ())
+function HLSTool_create(_schedulingKind)
+    ccall((:HLSTool_create, "libHLSCore_C_API.so"), Ptr{HLSTool}, (SchedulingKind,), _schedulingKind)
 end
 
 function HLSTool_destroy(_tool)
