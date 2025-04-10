@@ -13,9 +13,10 @@ end
 # reference
 """ HLS driver """
 mutable struct HLS
-    function HLS()
+    function HLS(dynamic_scheduling::Bool)
+        scheduling = HLSCore.SchedulingKind(dynamic_scheduling)
         println("Instantiating HLS Tool")
-        _tool = _HLSToolWrapper(HLSCore.HLSTool_create())
+        _tool = _HLSToolWrapper(HLSCore.HLSTool_create(scheduling))
 
         # register destructor
         finalizer(_tool::_HLSToolWrapper) do tool::_HLSToolWrapper
