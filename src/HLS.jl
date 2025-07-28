@@ -20,7 +20,7 @@ mutable struct HLS
 
         # register destructor
         finalizer(_tool::_HLSToolWrapper) do tool::_HLSToolWrapper
-            println("Deleting the HLSTool")
+            println("Cleaning up")
             HLSCore.HLSTool_destroy(tool.ptr)
         end
 
@@ -43,7 +43,7 @@ end
 
 """ Invoke synthesis """
 function synthesise(tool::HLS, input::String, output::String)
-    println("Instantiating HLS tool...")
+    println("Invoking HLS toolchain")
     tool.opt = HLSCore_IO(input, output)
 
     println("Setting Options")
@@ -53,5 +53,7 @@ function synthesise(tool::HLS, input::String, output::String)
     if (!HLSCore.HLSTool_synthesise(tool._tool.ptr))
         println("ERROR: Unable to synthesise source code, please check logs for errors")
     end
+
+    println("Synthesis successful: files written to $output")
 end
 

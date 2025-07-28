@@ -14,16 +14,16 @@ function _createHLSConfig()::HLSCore.HLSConfig
         false,
         HLSCore.DynamicParallelismKind(2),
         pointer("all"),
-        2,
+        1,
         HLSCore.IRLevel(0),
         HLSCore.IRLevel(5),
         false,
-        HLSCore.OutputFormatKind(1),
+        HLSCore.OutputFormatKind(2),
         false,
         false,
         true,
         false,
-        true
+        false 
     )
 end
 
